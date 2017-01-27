@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
+               name="RabbitMQ Addon Unit Test"
+               description="Addon to allow developers to leverage RabbitMQ on platform easilly."
+               deploymentNotes="Created for Apprenda 6.5.3"
+               developerHelp="Contact bgregorius@apprenda.com for assistance."
+               vendor="Apprenda"
+               author="Unit Test Author"
+               version="1.0.0"
+               manifestVersion="2"
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
+  <properties>
+    <property key="RabbitAdminEndpoint" displayName="RabbitMQ Admin Endpoint" description="URI of RabbitMQ Administration endpoint" value=""/>
+    <property key="RabbitAdminEndpointPort" displayName="RabbitMQ Admin Endpoint Port" description="Port that RabbitMQ Administration endpoint is running on" value=""/>
+    <property key="RabbitAdminUser" displayName="RabbitMQ Admin User" description="Admin username" value=""/>
+    <property key="RabbitAdminPassword" displayName="RabbitMQ Admin Password" description="Admin password" value="" isEncrypted="true" />
+  </properties>
+  <parameters allowUserDefinedParameters="false">
+  </parameters>
+</addonManifest>

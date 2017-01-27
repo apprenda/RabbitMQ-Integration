@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
+               name="RabbitMQ Integration"
+               description="Provides developers a mechanism to provision connectivity to RabbitMQ"
+               deploymentNotes="This Add-On assumes that you already have RabbitMQ instance running, configured with Basic authentication, and credentials for a user with admin privileges. The admin user will be leveraged to manage users and vhosts. Created for Apprenda 6.5.3"
+               developerHelp="No additional information is required to provision your connection to RabbitMQ."
+               vendor="Apprenda"
+               author="bgregorius@apprenda.com"
+               version="1.0.0"
+               manifestVersion="2"
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
+  <properties>
+    <property key="RabbitAdminEndpoint" displayName="RabbitMQ Endpoint" description="URI of RabbitMQ Administration endpoint" value=""/>
+    <property key="RabbitAdminEndpointPort" displayName="RabbitMQ Endpoint Port" description="Port that RabbitMQ Administration endpoint is running on" value=""/>
+    <property key="RabbitAdminUser" displayName="RabbitMQ Admin User" description="Admin username" value=""/>
+    <property key="RabbitAdminPassword" displayName="RabbitMQ Admin Password" description="Admin password" value="" isEncrypted="true" />
+  </properties>
+  <parameters allowUserDefinedParameters="false">
+  </parameters>
+</addonManifest>
