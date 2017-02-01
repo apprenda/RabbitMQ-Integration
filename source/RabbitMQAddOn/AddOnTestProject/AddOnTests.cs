@@ -19,8 +19,9 @@ namespace AddOnTestProject
 
             var properties = new List<AddonProperty>();
 
-            properties.Add(new AddonProperty() { Key = "RabbitAdminEndpoint", Value = "localhost" });
-            properties.Add(new AddonProperty() { Key = "RabbitAdminEndpointPort", Value = "5672" });
+            properties.Add(new AddonProperty() { Key = "RabbitEndpoint", Value = "localhost" });
+            properties.Add(new AddonProperty() { Key = "RabbitAdmintPort", Value = "15672" });
+            properties.Add(new AddonProperty() { Key = "RabbitPort", Value = "5672" });
             properties.Add(new AddonProperty() { Key = "RabbitAdminUser", Value = "guest" });
             properties.Add(new AddonProperty() { Key = "RabbitAdminPassword", Value = "guest" });
             properties.Add(new AddonProperty() { Key = "DeveloperAlias", Value = "unit" });
@@ -41,8 +42,9 @@ namespace AddOnTestProject
             var request = new AddonProvisionRequest();
             var properties = new List<AddonProperty>();
 
-            properties.Add(new AddonProperty() {Key = "RabbitAdminEndpoint", Value = "localhost"});
-            properties.Add(new AddonProperty() { Key = "RabbitAdminEndpointPort", Value = "32769" });
+            properties.Add(new AddonProperty() { Key = "RabbitEndpoint", Value = "localhost" });
+            properties.Add(new AddonProperty() { Key = "RabbitAdmintPort", Value = "15672" });
+            properties.Add(new AddonProperty() { Key = "RabbitPort", Value = "5672" });
             properties.Add(new AddonProperty() { Key = "RabbitAdminUser", Value = "guest" });
             properties.Add(new AddonProperty() { Key = "RabbitAdminPassword", Value = "guest" });
             properties.Add(new AddonProperty() { Key = "DeveloperAlias", Value = "unit" });
