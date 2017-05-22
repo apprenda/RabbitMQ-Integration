@@ -31,7 +31,8 @@ namespace RabbitMQAddOn
             createUserRequest.AddBody(createUserBody);
 
             var createUserResponse = client.Execute(createUserRequest);
-            if (createUserResponse.StatusCode != HttpStatusCode.NoContent)
+            
+            if (createUserResponse.ResponseStatus != ResponseStatus.Completed)
             {
                 return ProvisionAddOnResult.Failure("Unable to create user");
             }
@@ -43,7 +44,7 @@ namespace RabbitMQAddOn
             createVhostRequest.AddHeader("content-type", "application/json");
 
             var createVhostResponse = client.Execute(createVhostRequest);
-            if (createVhostResponse.StatusCode != HttpStatusCode.NoContent)
+            if (createVhostResponse.ResponseStatus != ResponseStatus.Completed)
             {
                 return ProvisionAddOnResult.Failure("Unable to create vhost");
             }
@@ -55,7 +56,7 @@ namespace RabbitMQAddOn
             permissionsRequest.AddBody(permissionsBody);
 
             var permissionsResponse = client.Execute(permissionsRequest);
-            if (permissionsResponse.StatusCode != HttpStatusCode.NoContent)
+            if (permissionsResponse.ResponseStatus != ResponseStatus.Completed)
             {
                 return ProvisionAddOnResult.Failure("Unable to set permissions");
             }
@@ -78,7 +79,7 @@ namespace RabbitMQAddOn
             deleteVhostRequest.AddHeader("content-type", "application/json");
 
             var deleteVhostResponse = client.Execute(deleteVhostRequest);
-            if (deleteVhostResponse.StatusCode != HttpStatusCode.NoContent)
+            if (deleteVhostResponse.ResponseStatus != ResponseStatus.Completed)
             {
                 return ProvisionAddOnResult.Failure("Unable to delete vhost");
             }
@@ -92,7 +93,7 @@ namespace RabbitMQAddOn
             deleteUserRequest.AddHeader("content-type", "application/json");
 
             var deleteUserResponse = client.Execute(deleteUserRequest);
-            if (deleteUserResponse.StatusCode != HttpStatusCode.NoContent)
+            if (deleteUserResponse.ResponseStatus != ResponseStatus.Completed)
             {
                 return ProvisionAddOnResult.Failure("Unable to delete user");
             }
