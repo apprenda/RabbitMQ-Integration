@@ -15,10 +15,10 @@
                provisioningPassword=""
                provisioningLocation="">
   <properties>
-    <property key="RabbitAdminEndpoint" displayName="RabbitMQ Admin Endpoint" description="URI of RabbitMQ Administration endpoint" value="hqs-engineer02.apprendalabs.local"/>
+    <property key="RabbitAdminEndpoint" displayName="RabbitMQ Admin Endpoint" description="URI of RabbitMQ Administration endpoint" value="hqs-engineer15.apprendalabs.local"/>
     <property key="RabbitAdminEndpointPort" displayName="RabbitMQ Admin Endpoint Port" description="Port that RabbitMQ Administration endpoint is running on" value="15672"/>
-    <property key="RabbitAdminUser" displayName="RabbitMQ Admin User" description="Admin username" value="addonuser"/>
-    <property key="RabbitAdminPassword" displayName="RabbitMQ Admin Password" description="Admin password" value="addonuser" isEncrypted="true" />
+    <property key="RabbitAdminUser" displayName="RabbitMQ Admin User" description="Admin username" value="guest"/>
+    <property key="RabbitAdminPassword" displayName="RabbitMQ Admin Password" description="Admin password" value="guest" isEncrypted="true" />
   </properties>
   <parameters allowUserDefinedParameters="false">
   </parameters>

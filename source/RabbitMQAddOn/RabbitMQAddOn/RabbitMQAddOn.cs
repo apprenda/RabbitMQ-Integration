@@ -7,15 +7,15 @@ using Apprenda.Testing;
 using RabbitMQ.Client;
 using RestSharp;
 using RestSharp.Authenticators;
-
+using Apprenda.Services.Logging;
 
 namespace RabbitMQAddOn
 {
     public class RabbitMQAddOn : AddonBase
     {
+        private static readonly ILogger log = LogManager.Instance().GetLogger(typeof(RabbitMQAddOn));
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
-        {
-            
+        {            
             var rabbitConfig = new RabbitMQConfig(request);            
             var client = new RestClient(rabbitConfig.ManagementUri);
             client.Authenticator = new HttpBasicAuthenticator(rabbitConfig.AdminUser, rabbitConfig.AdminPassword);
@@ -25,39 +25,75 @@ namespace RabbitMQAddOn
             var pass = Guid.NewGuid().ToString("N");
 
             var createUserPath = $"users/{user}";
-            var createUserBody = new {password = pass, tags = "monitoring,management"};
+            var createUserBody = new {password = pass, tags = "monitoring,management,administrator"};
 
             var createUserRequest = new RestRequest(createUserPath, Method.PUT) {RequestFormat = DataFormat.Json};
             createUserRequest.AddBody(createUserBody);
+            createUserRequest.AddHeader("content-type", "application/json");
 
+            log.DebugFormat("The following user is being created: {0} using the following URI: ", user,createUserPath.ToString());
             var createUserResponse = client.Execute(createUserRequest);
-            
-            if (createUserResponse.ResponseStatus != ResponseStatus.Completed)
+            log.DebugFormat("The response code for the user creation REST call is: {0}", createUserResponse.StatusCode);
+            if (createUserResponse.StatusCode != HttpStatusCode.Created)
             {
                 return ProvisionAddOnResult.Failure("Unable to create user");
             }
 
+            Thread.Sleep(5000);
             // Create new vhost
             var vhostName = request.Manifest.CallingDeveloperAlias + "_" + request.Manifest.InstanceAlias;
             var createVhostPath = $"vhosts/{vhostName}";
             var createVhostRequest = new RestRequest(createVhostPath, Method.PUT) { RequestFormat = DataFormat.Json };
             createVhostRequest.AddHeader("content-type", "application/json");
 
+            log.DebugFormat("The following vhost is being created: {0} using the following URI:", vhostName, createVhostPath.ToString());
             var createVhostResponse = client.Execute(createVhostRequest);
-            if (createVhostResponse.ResponseStatus != ResponseStatus.Completed)
+            log.DebugFormat("The response code for the vhost creationg REST call is: {0}", createVhostResponse.StatusCode);
+            if (createVhostResponse.StatusCode != HttpStatusCode.Created)
             {
+                //If this fails, we need to clean up the previous command
+
+                // Delete user
+                var deleteUserPath = $"users/{user}";
+
+                var deleteUserRequest = new RestRequest(deleteUserPath, Method.DELETE) { RequestFormat = DataFormat.Json };
+                deleteUserRequest.AddHeader("content-type", "application/json");
+
+                var deleteUserResponse = client.Execute(deleteUserRequest);
+
                 return ProvisionAddOnResult.Failure("Unable to create vhost");
             }
 
+            Thread.Sleep(5000);
             // Set permissions
             var permissionsPath = $"permissions/{vhostName}/{user}";
-            var permissionsBody = new {configure = ".* ",write=".* ",read=".* "};
+            var permissionsBody = new {configure = ".*",write=".*",read=".*"};
             var permissionsRequest = new RestRequest(permissionsPath, Method.PUT) {RequestFormat = DataFormat.Json};
+            permissionsRequest.AddHeader("content-type", "application/json");
             permissionsRequest.AddBody(permissionsBody);
 
+            log.DebugFormat("The permissions are being configuring using the following URI: {0}", permissionsPath);
             var permissionsResponse = client.Execute(permissionsRequest);
-            if (permissionsResponse.ResponseStatus != ResponseStatus.Completed)
+            log.DebugFormat("The response code for configuring the permissions is: {0}", permissionsResponse.StatusCode);
+            if (permissionsResponse.StatusCode != HttpStatusCode.Created)
             {
+                //If this fails, we need to clean up the previous command
+
+                // Delete user
+                var deleteUserPath = $"users/{user}";
+
+                var deleteUserRequest = new RestRequest(deleteUserPath, Method.DELETE) { RequestFormat = DataFormat.Json };
+                deleteUserRequest.AddHeader("content-type", "application/json");
+
+                var deleteUserResponse = client.Execute(deleteUserRequest);
+
+                // Delete Vhost
+                var deleteVhostPath = $"vhosts/{vhostName}";
+                var deleteVhostRequest = new RestRequest(deleteVhostPath, Method.DELETE) { RequestFormat = DataFormat.Json };
+                deleteVhostRequest.AddHeader("content-type", "application/json");
+
+                var deleteVhostResponse = client.Execute(deleteVhostRequest);
+
                 return ProvisionAddOnResult.Failure("Unable to set permissions");
             }
 
