@@ -7,7 +7,7 @@ This is the repository that includes all the details to integrate Apprenda with 
 ## Integration Steps, Setting up the Apprenda Add-On in the Apprenda Operator Portal
 
 ### Configuring Your RabbitMQ Instance ###
-- This add-on assumes you have a RabbitMQ instance already running. 
+- This Add-On assumes you have a RabbitMQ instance already running. 
 
 ### Configure the Add-On ###
 - Use the provided packaged Add-On, [found here](https://github.com/apprenda/RabbitMQ-Integration/releases) to upload the Add-On to the Apprenda Operator Portal (SOC). You can alternatively build or enhance the provided Visual Studio solution file to create an Add-On that meets your needs.
